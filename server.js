@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const http = require('http');
@@ -11,7 +12,7 @@ const io = socketio(server);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const verification_token = '22563988SHIP';
+const verification_token = process.env.VERIFICATION_TOKEN;
 
 app.get('/webhook', (req, res) => {
   // Verify webhook
@@ -112,7 +113,7 @@ function sendTextMessage(senderPsid, message) {
   // Send the HTTP request to the Messenger Platform
   request({
     uri: 'https://graph.facebook.com/v8.0/me/messages',
-    qs: { access_token: 'EAAddFCV3A4sBAL5DJFXjCwV1Hp4fZA1SIJyKtEneVxKNqf3pWnom3oiZBwxwGtcP9aIBdSNowMETL7bXzSWiY3zO7bf4iSadiRFZAPgJVRnKd0Ds5lfSXnYPkDoi87HwwuHURaTao0bHUAl82lFqgZCN3WEMZB8ERjKDpD7nmWU0Bj0FkMD3K6PfZAvdesctMZD' },
+    qs: { access_token: process.env.ACCESS_TOKEN },
     method: 'POST',
     json: requestBody
   }, (err, res, body) => {
